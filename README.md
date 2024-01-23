@@ -1,7 +1,5 @@
 # Projekt "Zooh!" - InformatikModul 322
 
-## README
-
 **Datum:** 15.12.2023  
 **Verfasst von:** Luigi Cavuoti  
 **Abteilung:** Informatik, BBW-Informatik  
