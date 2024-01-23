@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `zooh`.`ticket` (
 CREATE TABLE IF NOT EXISTS `zooh`.`user` (
   `userID` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(255) NOT NULL,
-  `pin` CHAR(8) NOT NULL,
+  `password` CHAR(255) NOT NULL,
   PRIMARY KEY (`userID`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB
