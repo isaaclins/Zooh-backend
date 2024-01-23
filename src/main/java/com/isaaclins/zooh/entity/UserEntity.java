@@ -28,5 +28,33 @@ public class UserEntity {
     private String username;
 
     @NonNull
-    private int password;
+    private String password;
+
+    public int getUserID(){
+        return userID;
+    }
+
+    @NonNull
+    public String getUsername(){
+        return username;
+    }
+
+    public String getPassword(){
+        return password;
+    }
+
+    public UserEntity setUserID(int userID){
+        this.userID = userID;
+        return this;
+    }
+
+    public UserEntity setUsername(@NonNull String username){
+        this.username = username;
+        return this;
+    }
+
+    public UserEntity setPassword(String password){
+        this.password = password;
+        return this;
+    }
 }
