@@ -1,19 +1,20 @@
-package com.isaaclins.zooh.controller;
+/*package com.isaaclins.zooh.controller;
 
-import com.isaaclins.zooh.entity.Ticket;
-import com.isaaclins.zooh.entity.UserEntity;
-import com.isaaclins.zooh.repository.TicketRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.isaaclins.zooh.db.generalisation;
+
+import com.isaaclins.zooh.entity.userentity;
+import com.isaaclins.zooh.repository.ticketrepository;
+import org.springframework.beans.factory.annotation.autowired;
+import org.springframework.data.jpa.repository.support.simplejparepository;
+import org.springframework.http.httpstatus;
+import org.springframework.http.responseentity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.text.parseexception;
+import java.text.simpledateformat;
+import java.util.date;
+import java.util.list;
+import java.util.optional;
 
 @RestController
 @RequestMapping("/ticket")
@@ -48,7 +49,7 @@ public class TicketController {
             newTicket.setExpirationDate(parsedDate);
             newTicket.setUserID(userID);
 
-            if (TicketRegistration.register(newTicket)) {
+            if (Generalisation.register(newTicket)) {
                 // Ticket creation successful
                 return new ResponseEntity<>(newTicket, HttpStatus.CREATED);
             } else {
@@ -100,3 +101,4 @@ public class TicketController {
         }
     }
 }
+*/
