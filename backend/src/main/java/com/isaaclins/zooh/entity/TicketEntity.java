@@ -1,12 +1,12 @@
 package com.isaaclins.zooh.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "ticket", schema = "zooh")
 public class TicketEntity {
@@ -28,7 +28,9 @@ public class TicketEntity {
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
+    @JsonProperty("UserId")
     private UserEntity UserId;
+
 
     public TicketEntity() {
     }
@@ -40,4 +42,45 @@ public class TicketEntity {
         ExpirationDate = expirationDate;
         UserId = userId;
     }
+
+    public void setTicketId(int ticketId) {
+        TicketId = ticketId;
+    }
+
+    public void setUsed(boolean used) {
+        Used = used;
+    }
+
+    public void setCost(double cost) {
+        Cost = cost;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        ExpirationDate = expirationDate;
+    }
+
+    public void setUserId(UserEntity userId) {
+        UserId = userId;
+    }
+
+    public int getTicketId() {
+        return TicketId;
+    }
+
+    public boolean isUsed() {
+        return Used;
+    }
+
+    public double getCost() {
+        return Cost;
+    }
+
+    public Date getExpirationDate() {
+        return ExpirationDate;
+    }
+
+    public UserEntity getUserId() {
+        return UserId;
+    }
+
 }
