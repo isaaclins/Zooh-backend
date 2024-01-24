@@ -1,4 +1,4 @@
-package com.isaaclins.zooh.db;
+/*package com.isaaclins.zooh.db;
 
 import com.isaaclins.zooh.entity.UserEntity;
 
@@ -88,6 +88,7 @@ public class Generalisation{
         }
 
     }
+
     public static boolean checkForUsername(String username) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -225,3 +226,4 @@ public class Generalisation{
 
 
 }
+*/
