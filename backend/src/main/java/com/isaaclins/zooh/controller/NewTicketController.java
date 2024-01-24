@@ -26,28 +26,36 @@ public class NewTicketController {
     }
 
       // Create operation
-    @PostMapping("/create")
-    public ResponseEntity<TicketEntity> createTicket(@RequestBody TicketEntity ticket) {
-        if (ticket.getExpirationDate() == null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(new Date());
-            calendar.add(Calendar.YEAR, 1);
-            Date expirationDate = calendar.getTime();
-            ticket.setExpirationDate(expirationDate);
-        }
+      @PostMapping("/create")
+      public ResponseEntity<TicketEntity> createTicket(@RequestBody TicketEntity ticket) {
+          if (ticket.getExpirationDate() == null) {
+              Calendar calendar = Calendar.getInstance();
+              calendar.setTime(new Date());
+              calendar.add(Calendar.YEAR, 1);
+              Date expirationDate = calendar.getTime();
+              ticket.setExpirationDate(expirationDate);
+          }
 
-        // Assuming you have a method to retrieve the UserEntity by ID from the database
-        UserEntity user = userRepository.findById(ticket.getUserId().getUserID()).orElse(null);
+          UserEntity user = ticket.getUserId(); // Assuming getUserId() returns UserEntity
+          if (user != null) {
+              UserEntity existingUser = userRepository.findById(user.getUserID()).orElse(null);
 
-        if (user != null) {
-            ticket.setUserId(user);
-            TicketEntity createdTicket = ticketRepository.save(ticket);
-            return ResponseEntity.ok(createdTicket);
-        } else {
-            // Handle the case where the user with the given ID is not found
-            return ResponseEntity.badRequest().build();
-        }
-    }
+              if (existingUser != null) {
+                  ticket.setUserId(existingUser);
+                  TicketEntity createdTicket = ticketRepository.save(ticket);
+                  return ResponseEntity.ok(createdTicket);
+              } else {
+                  // Handle the case where the user with the given ID is not found
+                  return ResponseEntity.badRequest().build();
+              }
+          } else {
+              // Handle the case where the UserEntity in the ticket is null
+              return ResponseEntity.badRequest().build();
+          }
+      }
+
+
+
 
 
 
