@@ -1,30 +1,33 @@
 package com.isaaclins.zooh.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="ticket")
-public class Ticket{
-
+@Table(name = "ticket")
+public class Ticket {
 
     @Id
-    @NonNull
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private String OwnerName;
+
     private Boolean Used;
     private int Cost;
-    private Date expiratonDate;
+
+    @Temporal(TemporalType.DATE)
+    private Date expirationDate;
+
+    @ManyToOne
+    @JoinColumn(name = "userID", nullable = false)
+    private UserEntity user;
 
 }
