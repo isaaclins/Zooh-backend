@@ -9,12 +9,12 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "ticket", schema = "zooh")
-public class Ticket {
+public class TicketEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticketid")
-    private int ID;
+    private int TicketId;
 
     @Column(name = "used")
     private boolean Used;
@@ -23,21 +23,21 @@ public class Ticket {
     private double Cost;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "expirationdate", nullable = false)
-    private Date expirationDate;
+    @Column(name = "expirationdate")
+    private Date ExpirationDate;
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
-    private UserEntity user;
+    private UserEntity UserId;
 
-    public Ticket() {
+    public TicketEntity() {
     }
 
-    public Ticket(int ID, boolean used, double cost, Date expirationDate, UserEntity user) {
-        this.ID = ID;
+    public TicketEntity(int ticketId, boolean used, double cost, Date expirationDate, UserEntity userId) {
+        TicketId = ticketId;
         Used = used;
         Cost = cost;
-        this.expirationDate = expirationDate;
-        this.user = user;
+        ExpirationDate = expirationDate;
+        UserId = userId;
     }
 }
