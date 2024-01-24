@@ -1,12 +1,17 @@
 package com.isaaclins.zooh.controller;
 
 import com.isaaclins.zooh.entity.Ticket;
+import com.isaaclins.zooh.entity.UserEntity;
 import com.isaaclins.zooh.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,12 +25,43 @@ public class TicketController {
     public TicketController(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
     }
-
     // CREATE (POST)
-    @PostMapping
-    public Ticket createTicket(@RequestBody Ticket ticket) {
-        return ticketRepository.save(ticket);
+    @PostMapping("/create")
+    public ResponseEntity<Ticket> createTicket(
+            @RequestParam int ID,
+            @RequestParam boolean used,
+            @RequestParam double cost,
+            @RequestParam String expirationDate,
+            @RequestParam int userID) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate;
+
+        try {
+            parsedDate = dateFormat.parse(expirationDate);
+
+            // Create a new TicketEntity
+            Ticket newTicket = new Ticket();
+            newTicket.setID(ID);
+            newTicket.setUsed(used);
+            newTicket.setCost(cost);
+            newTicket.setExpirationDate(parsedDate);
+            newTicket.setUserID(userID);
+
+            if (TicketRegistration.register(newTicket)) {
+                // Ticket creation successful
+                return new ResponseEntity<>(newTicket, HttpStatus.CREATED);
+            } else {
+                // Ticket creation failed
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        } catch (ParseException e) {
+            // Handle invalid date format
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
+
 
     // READ (GET)
     @GetMapping("/{id}")

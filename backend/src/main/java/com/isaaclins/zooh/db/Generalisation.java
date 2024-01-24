@@ -1,5 +1,6 @@
-/*package com.isaaclins.zooh.db;
+package com.isaaclins.zooh.db;
 
+import com.isaaclins.zooh.entity.Ticket;
 import com.isaaclins.zooh.entity.UserEntity;
 
 import java.sql.Connection;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Generalisation{
-    public static boolean login(UserEntity user) {
+ /*   public static boolean login(UserEntity user) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -211,9 +212,43 @@ public class Generalisation{
 
 
 
+*/
 
+    public static boolean register(Ticket ticket) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
+        try {
+            connection = DBConnection.connectToDB();
+            String insertQuery = "INSERT INTO ticket (ID, used, cost, expirationDate, userID) VALUES (?, ?, ?, ?, ?)";
+            preparedStatement = connection.prepareStatement(insertQuery);
 
+            preparedStatement.setInt(1, ticket.getID());
+            preparedStatement.setBoolean(2, ticket.isUsed());
+            preparedStatement.setDouble(3, ticket.getCost());
+            preparedStatement.setDate(4, new java.sql.Date(ticket.getExpirationDate().getTime()));
+            preparedStatement.setInt(5, ticket.getUserID());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            return rowsAffected > 0; // Return true if the insertion was successful
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Return false in case of an error
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 // ANTI SQL-INJECTION!!!! LETS GOOOO
     public static String sanitizeAndEscape(String stringtosanitize) {
@@ -226,4 +261,3 @@ public class Generalisation{
 
 
 }
-*/

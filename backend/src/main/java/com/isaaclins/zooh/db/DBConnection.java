@@ -1,4 +1,4 @@
-/*package com.isaaclins.zooh.db;
+package com.isaaclins.zooh.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,4 +19,3 @@ public class DBConnection{
         return Connection;
     }
 }
-*/
