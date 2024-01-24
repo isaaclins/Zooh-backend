@@ -22,7 +22,7 @@ USE `zooh` ;
 -- Table `zooh`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `zooh`.`user` (
-                                             `userid` INT NOT NULL,
+                                             `userid` INT NOT NULL AUTO_INCREMENT,
                                              `username` VARCHAR(255) NOT NULL,
                                              `password` VARCHAR(255) NOT NULL,
                                              PRIMARY KEY (`userid`),
