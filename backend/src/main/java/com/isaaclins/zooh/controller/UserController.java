@@ -34,7 +34,7 @@ public class UserController {
             existingUser.setPassword(updatedUser.getPassword());
             return userRepository.save(existingUser);
         }
-        return null; // Handle not found scenario
+        return null;
     }
 
     @DeleteMapping("/delete/{id}")
