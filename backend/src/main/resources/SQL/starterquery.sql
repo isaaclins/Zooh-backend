@@ -122,3 +122,9 @@ INSERT INTO zooh.ticket (ticketid, used, cost, userid, expirationdate) VALUES
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+SELECT * FROM animal;
+SELECT * FROM event;
+SELECT * FROM tag;
+SELECT * FROM ticket;
+SELECT * FROM user;
