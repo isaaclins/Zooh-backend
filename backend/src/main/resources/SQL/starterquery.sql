@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `zooh`.`event` (
                                               `eventID` INT NOT NULL AUTO_INCREMENT,
                                               `name` VARCHAR(255) NOT NULL,
                                               `tagIDFS` INT NOT NULL,
-                                              `time` DATETIME, -- Please specify the appropriate data type for time
+                                              `time` DATETIME,
                                               PRIMARY KEY (`eventID`),
                                               INDEX `tagIDFS_idx` (`tagIDFS` ASC) VISIBLE,
                                               CONSTRAINT `tagIDFStotagID`
