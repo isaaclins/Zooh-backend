@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.util.Date;
 
-
 @Entity
 @Table(name = "ticket", schema = "zooh")
 public class TicketEntity {
@@ -31,16 +30,19 @@ public class TicketEntity {
     @JsonProperty("UserId")
     private UserEntity UserId;
 
+    @Column(name = "UUID", nullable = false)
+    private String UUID;
 
     public TicketEntity() {
     }
 
-    public TicketEntity(int ticketId, boolean used, double cost, Date expirationDate, UserEntity userId) {
+    public TicketEntity(int ticketId, boolean used, double cost, Date expirationDate, UserEntity userId, String UUID) {
         TicketId = ticketId;
         Used = used;
         Cost = cost;
         ExpirationDate = expirationDate;
         UserId = userId;
+        this.UUID = UUID;
     }
 
     public void setTicketId(int ticketId) {
@@ -63,6 +65,10 @@ public class TicketEntity {
         UserId = userId;
     }
 
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
+    }
+
     public int getTicketId() {
         return TicketId;
     }
@@ -83,4 +89,7 @@ public class TicketEntity {
         return UserId;
     }
 
+    public String getUUID() {
+        return UUID;
+    }
 }

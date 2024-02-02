@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `zooh`.`ticket` (
                                                `cost` DECIMAL(2) NOT NULL,
                                                `userid` INT NOT NULL,
                                                `expirationdate` DATE NOT NULL,
+                                               `UUID` VARCHAR(24) NOT NULL DEFAULT '',
                                                PRIMARY KEY (`ticketid`),
                                                UNIQUE INDEX `ID_UNIQUE` (`ticketid` ASC) VISIBLE,
                                                INDEX `ticketidtouserid_idx` (`userid` ASC) VISIBLE,
@@ -48,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `zooh`.`ticket` (
                                                        ON DELETE NO ACTION
                                                        ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table `zooh`.`animal`
@@ -112,12 +114,10 @@ INSERT INTO zooh.user (username, password) VALUES
                                                ('jane_smith', 'securepass'),
                                                ('bob_jones', 'letmein');
 
-INSERT INTO zooh.ticket (ticketid, used, cost, userid, expirationdate) VALUES
-                                                                           (1, 0, 10.50, 1, '2024-02-01'),
-                                                                           (2, 1, 8.75, 2, '2024-02-05'),
-                                                                           (3, 0, 12.00, 3, '2024-02-10');
-
-
+INSERT INTO zooh.ticket (ticketid, used, cost, userid, expirationdate, UUID) VALUES
+                                                                                 (1, 0, 10.50, 1, '2024-02-01', 'K32P8ICSIXW3PSSL2AH4MJAI'),
+                                                                                 (2, 1, 8.75, 2, '2024-02-05', 'K32P8ICSIXW3SHSL2AH1MJAI'),
+                                                                                 (3, 0, 12.00, 3, '2024-02-10', 'K32P8ICSIXJ3THSL2AH4MJAI');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

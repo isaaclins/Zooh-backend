@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/ticket")
@@ -36,12 +33,17 @@ public class NewTicketController {
               ticket.setExpirationDate(expirationDate);
           }
 
-          UserEntity user = ticket.getUserId(); // Assuming getUserId() returns UserEntity
+          UserEntity user = ticket.getUserId();
           if (user != null) {
               UserEntity existingUser = userRepository.findById(user.getUserID()).orElse(null);
 
               if (existingUser != null) {
                   ticket.setUserId(existingUser);
+
+                  // Generate random UUID and set it in the ticket
+                  String randomUUID = UUID.randomUUID().toString().replace("-", "").substring(0, 24);
+                  ticket.setUUID(randomUUID);
+
                   TicketEntity createdTicket = ticketRepository.save(ticket);
                   return ResponseEntity.ok(createdTicket);
               } else {
@@ -58,6 +60,20 @@ public class NewTicketController {
 
 
 
+
+    @PutMapping("/use/{UUID}")
+    public ResponseEntity<TicketEntity> useTicket(@PathVariable String UUID) {
+        Optional<TicketEntity> existingTicketOptional = ticketRepository.findByUUID(UUID);
+
+        if (existingTicketOptional.isPresent()) {
+            TicketEntity existingTicket = existingTicketOptional.get();
+            existingTicket.setUsed(true);
+            TicketEntity updated = ticketRepository.save(existingTicket);
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
     // Read operation
