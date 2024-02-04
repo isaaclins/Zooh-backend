@@ -1,7 +1,9 @@
 package com.isaaclins.zooh.controller;
 
+import com.isaaclins.zooh.entity.UserEntity;
 import com.isaaclins.zooh.entity.EventEntity;
 import com.isaaclins.zooh.repository.EventRepository;
+import com.isaaclins.zooh.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/event")
+@RequestMapping("/events")
 public class EventController {
 
+    private final EventRepository eventRepository;
+    private final UserRepository userRepository;
+
     @Autowired
-    private EventRepository eventRepository;
+    public EventController(EventRepository eventRepository, UserRepository userRepository) {
+        this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping("/create")
     public EventEntity createEvent(@RequestBody EventEntity event) {
@@ -21,44 +29,38 @@ public class EventController {
     }
 
     @GetMapping("/get/{id}")
-    public EventEntity getEvent(@PathVariable int id) {
-        return eventRepository.findById(id).orElse(null);
+    public ResponseEntity<EventEntity> getEvent(@PathVariable int id) {
+        EventEntity event = eventRepository.findById(id).orElse(null);
+        return event != null ? ResponseEntity.ok(event) : ResponseEntity.notFound().build();
     }
 
+    @PostMapping("/addFavorite/{userId}/{eventId}")
+    public ResponseEntity<UserEntity> addFavoriteEvent(@PathVariable int userId, @PathVariable int eventId) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        EventEntity event = eventRepository.findById(eventId).orElse(null);
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<EventEntity> updateEvent(@PathVariable int id, @RequestBody EventEntity updatedEvent) {
-        EventEntity existingEvent = eventRepository.findById(id).orElse(null);
-
-        if (existingEvent != null) {
-            // Update only non-null properties of the existing event
-            if (updatedEvent.getName() != null) {
-                existingEvent.setName(updatedEvent.getName());
+        if (user != null && event != null) {
+            // Check if the eventId is not already in the list to avoid duplicates
+            if (!user.getFavoriteEventIds().contains(eventId)) {
+                user.getFavoriteEventIds().add(eventId);
+                userRepository.save(user);
+                return ResponseEntity.ok(user);
+            } else {
+                // Handle case where the event is already in the favorites
+                return ResponseEntity.badRequest().body(user);
             }
-
-            if (updatedEvent.getTagIDFS() != 0) {
-                existingEvent.setTagIDFS(updatedEvent.getTagIDFS());
-            }
-
-            if (updatedEvent.getTime() != null) {
-                existingEvent.setTime(updatedEvent.getTime());
-            }
-
-            return ResponseEntity.ok(eventRepository.save(existingEvent));
         }
 
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteEvent(@PathVariable int id) {
-        eventRepository.deleteById(id);
-        return "Event deleted successfully";
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<EventEntity>> getAllEvents() {
-        List<EventEntity> events = (List<EventEntity>) eventRepository.findAll();
-        return ResponseEntity.ok(events);
+        List<EventEntity> allEvents = eventRepository.findAll();
+        return ResponseEntity.ok(allEvents);
     }
+
+    // Other methods...
+
+    // You can similarly implement removeFavoriteEvent and other methods.
 }

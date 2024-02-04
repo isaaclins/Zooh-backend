@@ -13,83 +13,67 @@ public class TicketEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticketid")
-    private int TicketId;
+    private int ticketId;
 
     @Column(name = "used")
-    private boolean Used;
+    private boolean used;
 
     @Column(name = "cost", nullable = false)
-    private double Cost;
+    private double cost;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "expirationdate")
-    private Date ExpirationDate;
+    private Date expirationDate;
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
     @JsonProperty("UserId")
-    private UserEntity UserId;
+    private UserEntity userId;
 
     @Column(name = "UUID", nullable = false)
     private String UUID;
 
-    public TicketEntity() {
-    }
+    // Constructors, getters, and setters...
 
-    public TicketEntity(int ticketId, boolean used, double cost, Date expirationDate, UserEntity userId, String UUID) {
-        TicketId = ticketId;
-        Used = used;
-        Cost = cost;
-        ExpirationDate = expirationDate;
-        UserId = userId;
-        this.UUID = UUID;
-    }
-
-    public void setTicketId(int ticketId) {
-        TicketId = ticketId;
-    }
-
-    public void setUsed(boolean used) {
-        Used = used;
+    public double getCost() {
+        return cost;
     }
 
     public void setCost(double cost) {
-        Cost = cost;
+        this.cost = cost;
     }
 
-    public void setExpirationDate(Date expirationDate) {
-        ExpirationDate = expirationDate;
-    }
-
-    public void setUserId(UserEntity userId) {
-        UserId = userId;
-    }
-
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
-    }
-
-    public int getTicketId() {
-        return TicketId;
-    }
+    // Other methods...
 
     public boolean isUsed() {
-        return Used;
+        return used;
     }
 
-    public double getCost() {
-        return Cost;
+    public void setUsed(boolean used) {
+        this.used = used;
     }
 
     public Date getExpirationDate() {
-        return ExpirationDate;
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public UserEntity getUserId() {
-        return UserId;
+        return userId;
+    }
+
+    public void setUserId(UserEntity userId) {
+        this.userId = userId;
     }
 
     public String getUUID() {
         return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }
